@@ -433,6 +433,15 @@ function generarPdfFormulario() {
   const nombreArchivo = `formulario-proa-${fecha}.pdf`;
 
   const { jsPDF } = window.jspdf;
+  const body = document.body;
+  const anchoOriginalBody = body.style.width;
+  const overflowOriginalBody = body.style.overflow;
+  const minHeightOriginalContenedor = contenedor.style.minHeight;
+
+  body.classList.add("modo-exportacion-pdf");
+  body.style.width = "1500px";
+  body.style.overflow = "visible";
+  contenedor.style.minHeight = `${contenedor.scrollHeight}px`;
 
   return window.html2canvas(contenedor, {
     scale: 2.2,
@@ -440,8 +449,10 @@ function generarPdfFormulario() {
     backgroundColor: "#ffffff",
     scrollY: 0,
     letterRendering: true,
-    windowWidth: contenedor.scrollWidth,
-    windowHeight: contenedor.scrollHeight
+    windowWidth: 1500,
+    windowHeight: contenedor.scrollHeight,
+    width: contenedor.scrollWidth,
+    height: contenedor.scrollHeight
   }).then(canvas => {
     const imgWidth = canvas.width;
     const imgHeight = canvas.height;
@@ -463,6 +474,11 @@ function generarPdfFormulario() {
     const imgData = canvas.toDataURL("image/jpeg", 0.72);
     pdf.addImage(imgData, "JPEG", margin, margin, renderWidth, renderHeight);
     pdf.save(nombreArchivo);
+  }).finally(() => {
+    body.classList.remove("modo-exportacion-pdf");
+    body.style.width = anchoOriginalBody;
+    body.style.overflow = overflowOriginalBody;
+    contenedor.style.minHeight = minHeightOriginalContenedor;
   });
 }
 
