@@ -1,0 +1,936 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Encabezado PROA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="contenedor">
+    <header class="encabezado">
+      <div class="encabezado-logos">
+        <div class="logo-institucional logo-izq">
+          <img src="IMAGE/Imagen1.jpg" alt="Logo Alcaldía Mayor de Bogotá" class="logo-img logo-img-izq" />
+        </div>
+        <div class="logo-institucional logo-der">
+          <img src="IMAGE/LOGOSECRETARIA.jpg" alt="Logo Secretaría de Salud" class="logo-img logo-img-der" />
+        </div>
+      </div>
+      <h1 class="titulo-encabezado">
+        FORMATO DE SEGUIMIENTO A LA IMPLEMENTACIÓN DEL PROGRAMA DE OPTIMIZACIÓN
+        DE ANTIMICROBIANOS A INSTITUCIONES PRESTADORAS DE SERVICIO DE SALUD
+      </h1>
+    </header>
+
+    <div class="barra-superior"></div>
+
+    <table class="tabla-datos">
+      <tr>
+        <td class="etiqueta w-label-left">RAZÓN SOCIAL DE LA ASEGURADO QUE REALIZA EL SEGUIMIENTO:</td>
+        <td class="campo w-input-left">
+          <select id="razon_social_asegurado" name="razon_social_asegurado" required>
+            <option value="">Seleccione una opción</option>
+            <option value="ALIANSALUD">ALIANSALUD</option>
+            <option value="CAPITAL SALUD">CAPITAL SALUD</option>
+            <option value="COLMEDICA MEDICINA PREPAGADA">COLMEDICA MEDICINA PREPAGADA</option>
+            <option value="COLPATRIA MEDICINA PREPAGADA S.A.">COLPATRIA MEDICINA PREPAGADA S.A.</option>
+            <option value="COMPAÑIA DE MEDICINA PREPAGADA COLSANITAS S.A.">COMPAÑIA DE MEDICINA PREPAGADA COLSANITAS S.A.</option>
+            <option value="COMPENSAR">COMPENSAR</option>
+            <option value="COOMEVA MEDICINA PREPAGADA S.A.">COOMEVA MEDICINA PREPAGADA S.A.</option>
+            <option value="COOSALUD">COOSALUD</option>
+            <option value="ECOPETROL S.A">ECOPETROL S.A</option>
+            <option value="EPS Y MEDICINA PREPAGADA SURAMERICANA S.A.">EPS Y MEDICINA PREPAGADA SURAMERICANA S.A.</option>
+            <option value="FAMISANAR">FAMISANAR</option>
+            <option value="FOMAG">FOMAG</option>
+            <option value="FONDO DE PASIVO SOCIAL FERROCARRILES NACIONALES DE COLOMBIA">FONDO DE PASIVO SOCIAL FERROCARRILES NACIONALES DE COLOMBIA</option>
+            <option value="FUERZAS MILITARES">FUERZAS MILITARES</option>
+            <option value="MALLAMAS">MALLAMAS</option>
+            <option value="MEDISANITAS S A COMPAÑIA DE MEDICINA PREPAGADA">MEDISANITAS S A COMPAÑIA DE MEDICINA PREPAGADA</option>
+            <option value="MEDPLUS MEDICINA PREPAGADA S.A.">MEDPLUS MEDICINA PREPAGADA S.A.</option>
+            <option value="NUEVA EPS">NUEVA EPS</option>
+            <option value="POLICIA NACIONAL">POLICIA NACIONAL</option>
+            <option value="SALUD TOTAL">SALUD TOTAL</option>
+            <option value="SANITAS">SANITAS</option>
+            <option value="SURA">SURA</option>
+            <option value="UNISALUD UNIDAD DE SERVICIOS DE SALUD DE LA UNIVERSIDAD NACIONAL DE COLOMBIA">UNISALUD UNIDAD DE SERVICIOS DE SALUD DE LA UNIVERSIDAD NACIONAL DE COLOMBIA</option>
+          </select>
+        </td>
+
+        <td class="etiqueta w-label-right">TIPO DE ASEGURADORA:</td>
+        <td class="campo w-input-right">
+          <select id="tipo_aseguradora" name="tipo_aseguradora" required>
+            <option value="">Seleccione una opción</option>
+            <option value="Régimen Contributivo">Régimen Contributivo</option>
+            <option value="Régimen Subsidio">Régimen Subsidio</option>
+            <option value="Régimen de Excepción">Régimen de Excepción</option>
+            <option value="Régimen Especial">Régimen Especial</option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="etiqueta">NOMBRE DE QUIEN REALIZA EL SEGUIMIENTO:</td>
+        <td class="campo">
+          <input type="text" id="nombre_seguimiento" name="nombre_seguimiento" class="solo-letras" />
+        </td>
+
+        <td class="etiqueta">TEL. CONTACTO:</td>
+        <td class="campo">
+          <input type="text" id="tel_contacto" name="tel_contacto" class="solo-numeros" inputmode="numeric" maxlength="12" placeholder="###-###-####" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Ingrese 10 dígitos en formato ###-###-####" />
+        </td>
+      </tr>
+
+      <tr>
+        <td class="etiqueta">CARGO DE QUIEN REALIZA LA VISITA:</td>
+        <td class="campo">
+          <input type="text" id="cargo_visita" name="cargo_visita" class="solo-letras" />
+        </td>
+
+        <td class="etiqueta">CORREO ELECTRÓNICO:</td>
+        <td class="campo">
+          <input type="email" id="correo_electronico" name="correo_electronico" placeholder="nombre@dominio.com" />
+        </td>
+      </tr>
+
+      <tr>
+        <td class="etiqueta-blanca">RAZÓN SOCIAL DE LA IPS VISITADA:</td>
+        <td class="campo">
+          <div class="autocomplete-wrapper">
+            <input
+              type="text"
+              id="ips_visitada"
+              name="ips_visitada"
+              placeholder="Buscar IPS por código o nombre"
+              autocomplete="off"
+            />
+            <ul id="resultadosIps" class="resultados"></ul>
+            <div class="mensaje-ayuda">Escribe al menos 2 caracteres.</div>
+          </div>
+        </td>
+
+        <td class="etiqueta">NATURALEZA DE LA IPS:</td>
+        <td class="campo">
+          <select id="naturaleza_ips" name="naturaleza_ips" required>
+            <option value="">Seleccione una opción</option>
+            <option value="PÚBLICA">PÚBLICA</option>
+            <option value="PRIVADA">PRIVADA</option>
+            <option value="MIXTA">MIXTA</option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="etiqueta">CÓDIGO DE HABILITACIÓN IPS VISITADA:</td>
+        <td class="campo">
+          <input type="text" id="codigo_habilitacion_ips" name="codigo_habilitacion_ips" readonly />
+        </td>
+
+        <td class="etiqueta">COMPLEJIDAD DE LOS SERVICIOS DE SALUD:</td>
+        <td class="campo">
+          <select id="complejidad_servicios_salud" name="complejidad_servicios_salud" required>
+            <option value="">Seleccione una opción</option>
+            <option value="BAJA">BAJA</option>
+            <option value="MEDIANA">MEDIANA</option>
+            <option value="ALTA">ALTA</option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="etiqueta">FECHA DE LA VISITA DE SEGUIMIENTO:</td>
+        <td class="campo">
+          <input type="date" id="fecha_visita_seguimiento" name="fecha_visita_seguimiento" readonly />
+        </td>
+
+        <td class="campo" colspan="2"></td>
+      </tr>
+
+      <tr>
+        <td class="etiqueta">NOMBRE DE QUIEN RECIBE LA VISITA:</td>
+        <td class="campo">
+          <input type="text" id="nombre_recibe_visita" name="nombre_recibe_visita" class="solo-letras" />
+        </td>
+
+        <td class="etiqueta">CORREO ELECTRÓNICO INSTITUCIONAL:</td>
+        <td class="campo">
+          <input type="email" id="correo_institucional" name="correo_institucional" placeholder="nombre@institucion.com" />
+        </td>
+      </tr>
+
+      <tr>
+        <td class="etiqueta">CARGO DE QUIEN RECIBE LA VISITA:</td>
+        <td class="campo">
+          <input type="text" id="cargo_recibe_visita" name="cargo_recibe_visita" class="solo-letras" />
+        </td>
+
+        <td class="etiqueta">TEL. CONTACTO:</td>
+        <td class="campo">
+          <input type="text" id="tel_contacto_institucional" name="tel_contacto_institucional" class="solo-numeros" inputmode="numeric" maxlength="12" placeholder="###-###-####" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Ingrese 10 dígitos en formato ###-###-####" />
+        </td>
+      </tr>
+
+      <tr>
+        <td class="etiqueta">PROGRAMA POR EVALUAR:</td>
+        <td class="campo">
+          <input type="text" id="programa_evaluar" name="programa_evaluar" value="PROA" readonly />
+        </td>
+
+        <td class="campo" colspan="2"></td>
+      </tr>
+    </table>
+
+    <section class="seccion-evaluacion">
+      <table class="tabla-evaluacion">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>ITEM A EVALUAR</th>
+            <th>PONDERACIÓN ÍTEM</th>
+            <th>PUNTAJE</th>
+            <th>PUNTAJE OBTENIDO</th>
+            <th>OBSERVACIONES Y ACCIONES POR IMPLEMENTAR Y/O MEJORAR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="fila-componente">
+            <td colspan="6">COMPONENTE 1. PROGRAMA DE PROA</td>
+          </tr>
+          <tr data-section="componente-1">
+            <td>1</td>
+            <td>Cuenta con un Programa de Optimización de Antimicrobianos (PROA).</td>
+            <td class="centrado">2,5</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">2,5</td>
+            <td></td>
+          </tr>
+          <tr class="fila-subtitulo">
+            <td>1.1</td>
+            <td colspan="5">¿Cuenta con el equipo operativo institucional para el PROA?</td>
+          </tr>
+          <tr data-section="componente-1">
+            <td>1.1.a</td>
+            <td>Cuenta con líder el Programa de Optimización de antimicrobianos con tiempo protegido (baja, mediana y alta).</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1,5</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-1">
+            <td>1.1.b</td>
+            <td>Médico con formación en infectología para instituciones con servicios de mediana y alta complejidad.</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-1">
+            <td>1.1.c</td>
+            <td>Médico con formación en infectología, epidemiología, medicina interna, pediatría, medicina familiar, farmacología (baja complejidad).</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-1">
+            <td>1.1.d</td>
+            <td>Profesional(es) de enfermería (baja, mediana y alta).</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-1">
+            <td>1.1.e</td>
+            <td>Químico farmacéutico, según la oferta de servicios y en caso de administrar o prescribir antimicrobianos en la prestación de servicios de salud. Regente en farmacia (si cuenta con Servicio farmacéutico para baja).</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-1">
+            <td>1.1.f</td>
+            <td>Profesional de laboratorio clínico -microbiología (mediana y alta).</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-1">
+            <td>1.1.g</td>
+            <td>Representante de las diferentes especialidades clínicas de la institución (mediana y alta). Representante de personal médico, es recomendable contar con la asesoría de un profesional en medicina con formación en infectología (baja).</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-1">
+            <td>1.1.h</td>
+            <td>Profesional en epidemiología con entrenamiento en PROA (mediana y alta).</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-1">
+            <td>1.1.i</td>
+            <td>Profesional líder de capacitación (Equipo multidisciplinario). (baja, mediana y alta).</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-1">
+            <td>1.2</td>
+            <td>El Comité de PROA institucional está conformado mediante resolución o acto administrativo, conforme a lo establecido en la 2471 de 2022 del MSPS, o la norma que la modifica, adición o sustitución de la Secretaría Distrital de Salud.</td>
+            <td class="centrado">2,5</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">2,5</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-1">
+            <td>1.3</td>
+            <td>Asistencia regular a las reuniones mensuales del Comité de PROA Institucional de al menos el 80% de los integrantes, así como del gerente o su delegado con capacidad de decisión, conforme a lo establecido en la Resolución en la Resolución 2471 de 2022 del MSPS, o la norma que la modifique, adicione o sustituya de la Secretaría Distrital de Salud.</td>
+            <td class="centrado">2,5</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">2,5</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-1">
+            <td>1.5</td>
+            <td>Cuenta con el plan de acción anual del PROA correspondiente a la vigencia, que cuente con objetivos, metas, actividades (incluya programa de capacitación anual), responsables, indicadores de evaluación, cronograma y presupuesto para el fortalecimiento del PROA y la contención de la resistencia bacteriana, debe conforme a lo establecido en la Resolución 2471 de 2022 del MSPS, o la norma que la modifica, adición o sustitución de la Secretaría.</td>
+            <td class="centrado">2,5</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">2,5</td>
+            <td></td>
+          </tr>
+          <tr class="fila-total" data-subtotal="componente-1">
+            <td colspan="4" class="texto-total">Puntuación del subtotal /19</td>
+            <td class="centrado valor-total">19</td>
+            <td></td>
+          </tr>
+          <tr class="fila-componente">
+            <td colspan="6">COMPONENTE 2. OFICIALIZACIÓN</td>
+          </tr>
+          <tr class="fila-subtitulo">
+            <td>2</td>
+            <td colspan="5">La IPS cuenta con:</td>
+          </tr>
+          <tr data-section="componente-2">
+            <td>2.1</td>
+            <td>Guía local de tratamiento empírico validada por el equipo PROA basada en antibiograma local.</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-2">
+            <td>2.2</td>
+            <td>GPC Infección de Vías Urinarias</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-2">
+            <td>2.3</td>
+            <td>GPC Neumonía adquirida en la comunidad</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-2">
+            <td>2.4</td>
+            <td>GPC Infección de piel y tejidos blandos</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-2">
+            <td>2.5</td>
+            <td>Guías de prevención para infecciones asociadas a procedimientos médico-quirúrgicos.</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-2">
+            <td>2.6</td>
+            <td>GPC EDA</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-2">
+            <td>2.7</td>
+            <td>GPC profilaxis prequirúrgica</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-2">
+            <td>2.8</td>
+            <td>GPC OMA, faringoamigdalitis, bronquitis, sinusitis</td>
+            <td class="centrado">1</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">1</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-2">
+            <td>2.9</td>
+            <td>Cuenta con algoritmos de diagnostico y algoritmos de tratamiento</td>
+            <td class="centrado">2</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">2</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-2">
+            <td>2.10</td>
+            <td>Medidas de control: preautorización/ auditoría prospectiva con retroalimentación</td>
+            <td class="centrado">2</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">2</td>
+            <td></td>
+          </tr>
+          <tr class="fila-total" data-subtotal="componente-2">
+            <td colspan="4" class="texto-total">Puntuación del subtotal /12</td>
+            <td class="centrado valor-total">12</td>
+            <td></td>
+          </tr>
+          <tr class="fila-componente">
+            <td colspan="6">COMPONENTE 3. EDUCACIÓN PROA y RAM</td>
+          </tr>
+          <tr data-section="componente-3">
+            <td>3.1</td>
+            <td>Cuenta con programa de capacitación anual formal en uso racional de antimicrobianos a todo el talento humano y con enfoque para prescriptores, dispensadores y administradores</td>
+            <td class="centrado">10</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">10</td>
+            <td></td>
+          </tr>
+          <tr class="fila-total" data-subtotal="componente-3">
+            <td colspan="4" class="texto-total">Puntuación del subtotal /10</td>
+            <td class="centrado valor-total">10</td>
+            <td></td>
+          </tr>
+          <tr class="fila-componente">
+            <td colspan="6">COMPONENTE 4. PRESCRIPCIÓN Y BUENAS PRÁCTICAS CLÍNICAS</td>
+          </tr>
+          <tr data-section="componente-4">
+            <td>4.1a</td>
+            <td>Registro de la indicación del antimicrobiano, frecuencia, dosis y duración en la historia clínica o prescripción.</td>
+            <td class="centrado">5</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">5</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-4">
+            <td>4.1b</td>
+            <td>Cuenta con matriz de consolidación de todos los antibióticos restringidos</td>
+            <td class="centrado">5</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">5</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-4">
+            <td>4.1c</td>
+            <td>Procedimiento documentado para de-escalonamiento cuando hay resultados microbiológicos.</td>
+            <td class="centrado">5</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">5</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-4">
+            <td>4.2</td>
+            <td>Se tiene apoyo de informática para llevar a cabo su vigilancia como equipo y tecnología móviles, registros electrónicos, apoyo de profesionales de sistemas.</td>
+            <td class="centrado">5</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">5</td>
+            <td></td>
+          </tr>
+          <tr class="fila-total" data-subtotal="componente-4">
+            <td colspan="4" class="texto-total">Puntuación del subtotal /20</td>
+            <td class="centrado valor-total">20</td>
+            <td></td>
+          </tr>
+          <tr class="fila-componente">
+            <td colspan="6">COMPONENTE 5. ACTIVIDADES OPERATIVAS DE PROA</td>
+          </tr>
+          <tr data-section="componente-5">
+            <td>5.1</td>
+            <td>Realiza auditorías periódicas de prescripción con retroalimentación documentada al prescriptor.</td>
+            <td class="centrado">5</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">5</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-5">
+            <td>5.2</td>
+            <td>Se realizan rondas de PROA en servicios de hospitalización y UCI</td>
+            <td class="centrado">5</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">5</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-5">
+            <td>5.3</td>
+            <td>Evaluación periódica del consumo DDD/DOT, debe documentarse en acta de comité de PROA</td>
+            <td class="centrado">5</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">5</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-5">
+            <td>5.4</td>
+            <td>Existe plan de comunicación para alertas de resistencia o brotes.</td>
+            <td class="centrado">5</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">5</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-5">
+            <td>5.6</td>
+            <td>Coordinación con prevención y control de infecciones (IPC) — acciones conjuntas y reportes</td>
+            <td class="centrado">5</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">5</td>
+            <td></td>
+          </tr>
+          <tr class="fila-total" data-subtotal="componente-5">
+            <td colspan="4" class="texto-total">Puntuación del subtotal /25</td>
+            <td class="centrado valor-total">25</td>
+            <td></td>
+          </tr>
+          <tr class="fila-componente">
+            <td colspan="6">COMPONENTE 6. MONITORIZACIÓN/AUDITORIA DE PRÁCTICAS DE PROA</td>
+          </tr>
+          <tr data-section="componente-6">
+            <td>6.1</td>
+            <td>La institución cuenta con un plan de monitorización y auditoría, que incluye metas, objetivos y actividades claras, así como herramientas para recopilar datos de manera sistemática y evaluar el PROA.</td>
+            <td class="centrado">7</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">7</td>
+            <td></td>
+          </tr>
+          <tr class="fila-total" data-subtotal="componente-6">
+            <td colspan="4" class="texto-total">Puntuación del subtotal /7</td>
+            <td class="centrado valor-total">7</td>
+            <td></td>
+          </tr>
+          <tr class="fila-componente">
+            <td colspan="6">COMPONENTE 7. INDICADORES Y HERRAMIENTA DE AUTOEVALUACIÓN</td>
+          </tr>
+          <tr data-section="componente-7">
+            <td>7.1</td>
+            <td>Realiza notificación trimestral de indicadores de PROA de acuerdo a Lineamientos PROA</td>
+            <td class="centrado">3,5</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="">Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">0</td>
+            <td></td>
+          </tr>
+          <tr data-section="componente-7">
+            <td>7.2</td>
+            <td>Realiza diligenciamiento de manera anual de la herramienta de autoevaluación de PROA (mediana y alta)</td>
+            <td class="centrado">3,5</td>
+            <td class="centrado">
+              <select class="estado-cumplimiento" name="estado_cumplimiento[]">
+                <option value="" selected>Seleccione una opción</option>
+                <option value="Cumple">Cumple</option>
+                <option value="Cumplimiento Parcial">Cumplimiento Parcial</option>
+                <option value="No Cumple">No Cumple</option>
+                <option value="No Aplica">No Aplica</option>
+              </select>
+            </td>
+            <td class="centrado celda-puntaje">3,5</td>
+            <td></td>
+          </tr>
+          <tr class="fila-total" data-subtotal="componente-7">
+            <td colspan="4" class="texto-total">Puntuación del subtotal /7</td>
+            <td class="centrado valor-total">3,5</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="seccion-resumen">
+      <table class="tabla-resumen">
+        <thead>
+          <tr>
+            <th>COMPONENTES ESENCIALES</th>
+            <th colspan="2">PUNTUACIÓN (SUBTOTALES)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. Programa de PROA</td>
+            <td colspan="2" class="centrado resumen-valor" data-resumen="componente-1">19</td>
+          </tr>
+          <tr>
+            <td>2. Oficialización</td>
+            <td colspan="2" class="centrado resumen-valor" data-resumen="componente-2">12</td>
+          </tr>
+          <tr>
+            <td>3. Educación PROA y RAM</td>
+            <td colspan="2" class="centrado resumen-valor" data-resumen="componente-3">10</td>
+          </tr>
+          <tr>
+            <td>4. Prescripción y buenas prácticas clínicas</td>
+            <td colspan="2" class="centrado resumen-valor" data-resumen="componente-4">20</td>
+          </tr>
+          <tr>
+            <td>5. Actividades operativas de PROA</td>
+            <td colspan="2" class="centrado resumen-valor" data-resumen="componente-5">25</td>
+          </tr>
+          <tr>
+            <td>6. Monitorización/auditorías de prácticas de PROA</td>
+            <td colspan="2" class="centrado resumen-valor" data-resumen="componente-6">7</td>
+          </tr>
+          <tr>
+            <td>7. Indicadores y herramientas de autoevaluación PROA</td>
+            <td colspan="2" class="centrado resumen-valor" data-resumen="componente-7">3,5</td>
+          </tr>
+          <tr>
+            <td class="resumen-vacio" rowspan="3"></td>
+            <td class="resumen-etiqueta">TOTAL FINAL</td>
+            <td class="centrado resumen-destacado" id="totalFinalResumen">99</td>
+          </tr>
+          <tr>
+            <td class="resumen-etiqueta">INTERPRETACIÓN</td>
+            <td class="centrado resumen-destacado" id="interpretacionResumen">FALSO</td>
+          </tr>
+          <tr>
+            <td class="resumen-etiqueta">ACCIONES A REALIZAR</td>
+            <td class="resumen-destacado" id="accionesResumen"></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="seccion-resultado">
+      <table class="tabla-resultado">
+        <thead>
+          <tr>
+            <th colspan="2">RESULTADO DE EVALUACION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="resultado-subtitulo">NIVEL DE CALIFICACION</td>
+            <td class="resultado-subtitulo centrado">RANGOS DE CALIFICACION</td>
+          </tr>
+          <tr>
+            <td>Avanzado</td>
+            <td class="centrado">Puntaje entre 91 - 100</td>
+          </tr>
+          <tr>
+            <td>Intermedio</td>
+            <td class="centrado">Puntaje entre 71 - 90</td>
+          </tr>
+          <tr>
+            <td>Básico</td>
+            <td class="centrado">Puntaje entre 70 - 61</td>
+          </tr>
+          <tr>
+            <td>Inadecuado</td>
+            <td class="centrado">Puntaje <= 60</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="acciones-formulario">
+      <button type="button" id="btnEnviarFormulario" class="boton-enviar">Enviar</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+
