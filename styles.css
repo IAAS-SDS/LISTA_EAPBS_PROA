@@ -460,65 +460,14 @@ table {
   font-weight: 700;
 }
 
-body.modo-exportacion-pdf {
-  margin: 8px !important;
-  padding: 0 !important;
+@media print {
+  .acciones-formulario {
+    display: none;
+  }
 }
 
-body.modo-exportacion-pdf .contenedor {
-  width: 1500px !important;
-  max-width: 1500px !important;
-  overflow: visible !important;
-}
-
-body.modo-exportacion-pdf .encabezado {
-  padding: 14px 20px 10px !important;
-}
-
-body.modo-exportacion-pdf .encabezado-logos {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  gap: 0 !important;
-}
-
-body.modo-exportacion-pdf .titulo-encabezado {
-  font-size: 22px !important;
-  line-height: 1.25 !important;
-}
-
-body.modo-exportacion-pdf .logo-img-izq,
-body.modo-exportacion-pdf .logo-img-der {
-  height: 138px !important;
-}
-
-body.modo-exportacion-pdf .tabla-datos {
-  table-layout: fixed !important;
-}
-
-body.modo-exportacion-pdf .tabla-datos tr {
-  display: table-row !important;
-}
-
-body.modo-exportacion-pdf .tabla-datos td {
-  display: table-cell !important;
-  width: auto !important;
-  border-left: 1px solid #000 !important;
-  border-right: 1px solid #000 !important;
-  border-top: 1px solid #000 !important;
-}
-
-body.modo-exportacion-pdf .seccion-evaluacion,
-body.modo-exportacion-pdf .seccion-resumen,
-body.modo-exportacion-pdf .seccion-resultado {
-  overflow: visible !important;
-}
-
-body.modo-exportacion-pdf .tabla-evaluacion,
-body.modo-exportacion-pdf .tabla-resumen,
-body.modo-exportacion-pdf .tabla-resultado {
-  min-width: 0 !important;
-  width: 100% !important;
+body.modo-exportacion-pdf .acciones-formulario {
+  display: none !important;
 }
 
 body.modo-exportacion-pdf .tabla-evaluacion thead {
@@ -532,53 +481,17 @@ body.modo-exportacion-pdf .tabla-evaluacion tbody {
 body.modo-exportacion-pdf .tabla-evaluacion tr,
 body.modo-exportacion-pdf .tabla-evaluacion tr[data-section] {
   display: table-row !important;
-  margin: 0 !important;
-  border: none !important;
-  border-radius: 0 !important;
 }
 
 body.modo-exportacion-pdf .tabla-evaluacion th,
 body.modo-exportacion-pdf .tabla-evaluacion td,
 body.modo-exportacion-pdf .tabla-evaluacion tr[data-section] td {
   display: table-cell !important;
-  width: auto !important;
-  border: 1px solid #111 !important;
-  padding: 8px 6px !important;
-  text-align: inherit !important;
 }
 
 body.modo-exportacion-pdf .tabla-evaluacion tr[data-section] td::before {
   display: none !important;
   content: none !important;
-}
-
-body.modo-exportacion-pdf .tabla-evaluacion .fila-subtitulo {
-  display: table-row !important;
-  margin: 0 !important;
-  border: none !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-}
-
-body.modo-exportacion-pdf .tabla-evaluacion .fila-subtitulo td {
-  display: table-cell !important;
-  border: 1px solid #111 !important;
-  padding: 8px 6px !important;
-}
-
-body.modo-exportacion-pdf .tabla-evaluacion .fila-total td {
-  display: table-cell !important;
-}
-
-body.modo-exportacion-pdf .tabla-evaluacion .estado-cumplimiento,
-body.modo-exportacion-pdf .observacion-input {
-  font-size: 12px !important;
-}
-
-@media print {
-  .acciones-formulario {
-    display: none;
-  }
 }
 
 @media (max-width: 1100px) {

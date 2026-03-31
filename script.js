@@ -11,6 +11,7 @@ const selectsEstadoCumplimiento = document.querySelectorAll(".estado-cumplimient
 const botonEnviarFormulario = document.getElementById("btnEnviarFormulario");
 const inputFechaVisitaSeguimiento = document.getElementById("fecha_visita_seguimiento");
 const VALIDAR_CAMPOS_ANTES_DE_ENVIAR = true;
+const ENVIAR_A_GOOGLE_SHEETS = true;
 
 let timer = null;
 
@@ -408,7 +409,7 @@ async function manejarEnvioFormulario() {
   try {
     await enviarPayloadAGoogleSheets(payload);
 
-    if (SHEETS_WEBHOOK_URL) {
+    if (ENVIAR_A_GOOGLE_SHEETS && SHEETS_WEBHOOK_URL) {
       alert("PDF generado, descargado y datos enviados correctamente a Google Sheets.");
     } else {
       alert("PDF generado y descargado correctamente. Falta configurar la URL de Google Sheets para enviar los datos.");
@@ -429,61 +430,183 @@ function generarPdfFormulario() {
     return Promise.reject(new Error("No se encontró el contenido del formulario."));
   }
 
-  const fecha = new Date().toISOString().slice(0, 10);
-  const nombreArchivo = `formulario-proa-${fecha}.pdf`;
+  const nombreArchivo = construirNombreArchivoPdf();
 
   const { jsPDF } = window.jspdf;
   const body = document.body;
   const anchoOriginalBody = body.style.width;
   const overflowOriginalBody = body.style.overflow;
-  const minHeightOriginalContenedor = contenedor.style.minHeight;
+  const anchoExportacion = 1500;
+  const espacioExtraExportacion = 8;
+  const wrapperExportacion = document.createElement("div");
+  const clonContenedor = contenedor.cloneNode(true);
+
+  sincronizarValoresFormulario(contenedor, clonContenedor);
+
+  wrapperExportacion.style.position = "absolute";
+  wrapperExportacion.style.left = "-99999px";
+  wrapperExportacion.style.top = "0";
+  wrapperExportacion.style.width = `${anchoExportacion}px`;
+  wrapperExportacion.style.padding = "0";
+  wrapperExportacion.style.margin = "0";
+  wrapperExportacion.style.background = "#ffffff";
+  wrapperExportacion.appendChild(clonContenedor);
+  body.appendChild(wrapperExportacion);
 
   body.classList.add("modo-exportacion-pdf");
-  body.style.width = "1500px";
+  body.style.width = `${anchoExportacion}px`;
   body.style.overflow = "visible";
-  contenedor.style.minHeight = `${contenedor.scrollHeight}px`;
+  clonContenedor.style.paddingBottom = "0";
+  clonContenedor.style.margin = "0 auto";
+  clonContenedor.style.boxSizing = "border-box";
+  const tablaResultado = clonContenedor.querySelector(".tabla-resultado");
+  const alturaExportacion = tablaResultado
+    ? Math.ceil(tablaResultado.offsetTop + tablaResultado.offsetHeight) + espacioExtraExportacion
+    : clonContenedor.scrollHeight + espacioExtraExportacion;
+  const anchoCaptura = clonContenedor.offsetWidth;
 
-  return window.html2canvas(contenedor, {
+  return window.html2canvas(clonContenedor, {
     scale: 2.2,
     useCORS: true,
     backgroundColor: "#ffffff",
     scrollY: 0,
     letterRendering: true,
-    windowWidth: 1500,
-    windowHeight: contenedor.scrollHeight,
-    width: contenedor.scrollWidth,
-    height: contenedor.scrollHeight
+    windowWidth: anchoCaptura,
+    windowHeight: alturaExportacion,
+    width: anchoCaptura,
+    height: alturaExportacion
   }).then(canvas => {
-    const imgWidth = canvas.width;
-    const imgHeight = canvas.height;
+    const canvasRecortado = recortarEspacioBlancoInferior(canvas);
+    const imgWidth = canvasRecortado.width;
+    const imgHeight = canvasRecortado.height;
     const margin = 5;
-    const pageWidth = 210;
-    const pageHeight = (imgHeight * pageWidth) / imgWidth + margin * 2;
-    const orientation = pageHeight > pageWidth ? "portrait" : "landscape";
+    const pdfWidth = 210;
+    const renderWidth = pdfWidth - margin * 2;
+    const renderHeight = (imgHeight * renderWidth) / imgWidth;
+    const pdfHeight = renderHeight + margin * 2 + 12;
 
     const pdf = new jsPDF({
-      orientation,
+      orientation: "portrait",
       unit: "mm",
-      format: [pageHeight, pageWidth],
+      format: [pdfWidth, pdfHeight],
       compress: true
     });
 
-    const renderWidth = pageWidth - margin * 2;
-    const renderHeight = (imgHeight * renderWidth) / imgWidth;
-
-    const imgData = canvas.toDataURL("image/jpeg", 0.72);
+    const imgData = canvasRecortado.toDataURL("image/jpeg", 0.72);
     pdf.addImage(imgData, "JPEG", margin, margin, renderWidth, renderHeight);
     pdf.save(nombreArchivo);
   }).finally(() => {
     body.classList.remove("modo-exportacion-pdf");
     body.style.width = anchoOriginalBody;
     body.style.overflow = overflowOriginalBody;
-    contenedor.style.minHeight = minHeightOriginalContenedor;
+    wrapperExportacion.remove();
+  });
+}
+
+function recortarEspacioBlancoInferior(canvas) {
+  const contexto = canvas.getContext("2d", { willReadFrequently: true });
+  if (!contexto) {
+    return canvas;
+  }
+
+  const { width, height } = canvas;
+  const datos = contexto.getImageData(0, 0, width, height).data;
+  let ultimaFilaConContenido = height - 1;
+  const umbral = 245;
+
+  for (let y = height - 1; y >= 0; y -= 1) {
+    let filaVacia = true;
+
+    for (let x = 0; x < width; x += 1) {
+      const indice = (y * width + x) * 4;
+      const r = datos[indice];
+      const g = datos[indice + 1];
+      const b = datos[indice + 2];
+      const a = datos[indice + 3];
+
+      if (a !== 0 && (r < umbral || g < umbral || b < umbral)) {
+        filaVacia = false;
+        break;
+      }
+    }
+
+    if (!filaVacia) {
+      ultimaFilaConContenido = y;
+      break;
+    }
+  }
+
+  const paddingInferior = 8;
+  const nuevaAltura = Math.max(ultimaFilaConContenido + 1 + paddingInferior, 1);
+  if (nuevaAltura >= height) {
+    return canvas;
+  }
+
+  const canvasRecortado = document.createElement("canvas");
+  canvasRecortado.width = width;
+  canvasRecortado.height = nuevaAltura;
+  const contextoRecortado = canvasRecortado.getContext("2d");
+  if (!contextoRecortado) {
+    return canvas;
+  }
+
+  contextoRecortado.fillStyle = "#ffffff";
+  contextoRecortado.fillRect(0, 0, width, nuevaAltura);
+  contextoRecortado.drawImage(canvas, 0, 0, width, nuevaAltura, 0, 0, width, nuevaAltura);
+
+  return canvasRecortado;
+}
+
+function construirNombreArchivoPdf() {
+  const fecha = document.getElementById("fecha_visita_seguimiento")?.value || new Date().toISOString().slice(0, 10);
+  const programa = document.getElementById("programa_evaluar")?.value || "PROA";
+  const aseguradora = document.getElementById("razon_social_asegurado")?.value || "SIN_ASEGURADORA";
+  const ips = document.getElementById("ips_visitada")?.value || "SIN_IPS";
+
+  return [
+    limpiarTextoParaArchivo(fecha),
+    limpiarTextoParaArchivo(programa),
+    limpiarTextoParaArchivo(aseguradora),
+    limpiarTextoParaArchivo(ips)
+  ].join("_") + ".pdf";
+}
+
+function limpiarTextoParaArchivo(texto) {
+  return (texto || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[<>:"/\\|?*\x00-\x1F]/g, " ")
+    .replace(/\s+/g, "_")
+    .replace(/_+/g, "_")
+    .replace(/^_+|_+$/g, "") || "SIN_DATO";
+}
+
+function sincronizarValoresFormulario(origen, destino) {
+  const camposOrigen = origen.querySelectorAll("input, select, textarea");
+  const camposDestino = destino.querySelectorAll("input, select, textarea");
+
+  camposOrigen.forEach((campoOrigen, index) => {
+    const campoDestino = camposDestino[index];
+    if (!campoDestino) {
+      return;
+    }
+
+    if (campoOrigen instanceof HTMLSelectElement) {
+      campoDestino.value = campoOrigen.value;
+      Array.from(campoDestino.options).forEach(option => {
+        option.selected = option.value === campoOrigen.value;
+      });
+      return;
+    }
+
+    if (campoOrigen instanceof HTMLInputElement || campoOrigen instanceof HTMLTextAreaElement) {
+      campoDestino.value = campoOrigen.value;
+    }
   });
 }
 
 async function enviarPayloadAGoogleSheets(payload) {
-  if (!SHEETS_WEBHOOK_URL) {
+  if (!ENVIAR_A_GOOGLE_SHEETS || !SHEETS_WEBHOOK_URL) {
     return null;
   }
 
