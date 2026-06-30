@@ -459,6 +459,8 @@ function generarPdfFormulario() {
   clonContenedor.style.paddingBottom = "0";
   clonContenedor.style.margin = "0 auto";
   clonContenedor.style.boxSizing = "border-box";
+  prepararCamposObservacion(clonContenedor);
+  reemplazarObservacionesParaExportacion(clonContenedor);
   const tablaResultado = clonContenedor.querySelector(".tabla-resultado");
   const alturaExportacion = tablaResultado
     ? Math.ceil(tablaResultado.offsetTop + tablaResultado.offsetHeight) + espacioExtraExportacion
@@ -601,7 +603,48 @@ function sincronizarValoresFormulario(origen, destino) {
 
     if (campoOrigen instanceof HTMLInputElement || campoOrigen instanceof HTMLTextAreaElement) {
       campoDestino.value = campoOrigen.value;
+
+      if (campoOrigen instanceof HTMLTextAreaElement && campoDestino instanceof HTMLTextAreaElement) {
+        ajustarAlturaObservacion(campoDestino);
+      }
     }
+  });
+}
+
+function ajustarAlturaObservacion(textarea) {
+  if (!(textarea instanceof HTMLTextAreaElement)) {
+    return;
+  }
+
+  textarea.style.height = "auto";
+  textarea.style.height = `${Math.max(textarea.scrollHeight, 58)}px`;
+}
+
+function prepararCamposObservacion(scope = document) {
+  const textareas = scope.querySelectorAll(".observacion-input");
+
+  textareas.forEach(textarea => {
+    ajustarAlturaObservacion(textarea);
+
+    if (textarea.dataset.autoResizeBound === "true") {
+      return;
+    }
+
+    textarea.addEventListener("input", () => {
+      ajustarAlturaObservacion(textarea);
+    });
+    textarea.dataset.autoResizeBound = "true";
+  });
+}
+
+function reemplazarObservacionesParaExportacion(scope) {
+  const textareas = scope.querySelectorAll(".observacion-input");
+
+  textareas.forEach(textarea => {
+    const bloqueTexto = document.createElement("div");
+    bloqueTexto.className = "observacion-exporte";
+    bloqueTexto.textContent = textarea.value.trim() || textarea.placeholder || "";
+    textarea.replaceWith(bloqueTexto);
   });
 }
 
@@ -686,7 +729,10 @@ function inicializarCamposObservacion() {
     textarea.name = "observacion_item[]";
     textarea.placeholder = "Escriba observaciones...";
     celdaObservacion.appendChild(textarea);
+    ajustarAlturaObservacion(textarea);
   });
+
+  prepararCamposObservacion();
 }
 
 function actualizarColorPuntaje(celda, estado) {

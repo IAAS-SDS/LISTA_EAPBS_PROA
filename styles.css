@@ -341,9 +341,14 @@ table {
   padding: 6px 8px;
   border: 1px solid #bfc7d1;
   border-radius: 4px;
+  box-sizing: border-box;
   font-size: 12px;
+  line-height: 1.35;
   font-family: Arial, sans-serif;
   resize: vertical;
+  overflow-y: hidden;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   background: #fff;
 }
 
@@ -351,6 +356,22 @@ table {
   border-color: #2d6cdf;
   box-shadow: 0 0 0 2px rgba(45, 108, 223, 0.12);
   outline: none;
+}
+
+.observacion-exporte {
+  width: 100%;
+  min-height: 58px;
+  padding: 6px 8px;
+  border: 1px solid #bfc7d1;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 12px;
+  line-height: 1.35;
+  font-family: Arial, sans-serif;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  background: #fff;
 }
 
 .fila-total td {
@@ -492,6 +513,11 @@ body.modo-exportacion-pdf .tabla-evaluacion tr[data-section] td {
 body.modo-exportacion-pdf .tabla-evaluacion tr[data-section] td::before {
   display: none !important;
   content: none !important;
+}
+
+body.modo-exportacion-pdf .observacion-input {
+  resize: none !important;
+  overflow: visible !important;
 }
 
 @media (max-width: 1100px) {
