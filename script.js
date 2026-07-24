@@ -201,13 +201,13 @@ function recalcularFilaEvaluacion(selectEstado) {
   let factor = 0;
   switch (selectEstado.value) {
     case "Cumple":
+    case "No Aplica":
       factor = 1;
       break;
     case "Cumplimiento Parcial":
       factor = 0.5;
       break;
     case "No Cumple":
-    case "No Aplica":
     default:
       factor = 0;
       break;
